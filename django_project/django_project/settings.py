@@ -80,16 +80,10 @@ WSGI_APPLICATION = "django_project.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+print(env.db_url("DATABASE_URL"))
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "HOST": env.str("DB_HOST"),
-        "PORT": env.int("DB_PORT"),
-        "NAME": env.str("DB_NAME"),
-        "USER": env.str("DB_USER"),
-        "PASSWORD": env.str("DB_PASSWORD"),
-    }
+    "default": env.db_url("DATABASE_URL", default="postgres://postgres@db/postgres")
 }
 
 
