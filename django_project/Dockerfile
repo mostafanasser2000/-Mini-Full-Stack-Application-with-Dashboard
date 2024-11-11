@@ -11,14 +11,11 @@ WORKDIR /usr/src/app
 # Install dependenices
 RUN apt-get update && apt-get install -y netcat
 COPY ./requirements.txt .
-RUN python3 -m pip install --no-cach-dir -r requirements.txt
-
-COPY ../scripts/docker-entrypoint.sh ./docker-entrypoint.sh
+RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
 COPY . .
 
 EXPOSE 8000
 
-ENTRYPOINT [ "docker-entrypoint.sh" ]
 CMD [ "python3", "manage.py", "runserver", "0.0.0.0:8000"]
