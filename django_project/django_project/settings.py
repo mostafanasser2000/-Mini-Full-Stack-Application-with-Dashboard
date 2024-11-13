@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "django_filters",
     "drf_spectacular",
+    "corsheaders",
     # local
     "accounts",
     "medications",
@@ -187,3 +188,13 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "A sample API for a pharmacy",
     "VERSION": "1.0.0",
 }
+
+# Front end configuration
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "http://0.0.0.0:3000",
+    "http://0.0.0.0:8000",
+)
+
+CORS_TRUSTED_ORIGIN = ["http://localhost:3000", "http://0.0.0.0:3000"]
