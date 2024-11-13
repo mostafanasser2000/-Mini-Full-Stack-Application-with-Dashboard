@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "django_filters",
+    "drf_spectacular",
     # local
     "accounts",
     "medications",
@@ -164,6 +165,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",  # for easy login and logout in Browsable API
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 # dj_rest_auth configuration
@@ -178,4 +180,10 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "MINI PHARMACY API PROJECT",
+    "DESCRIPTION": "A sample API for a pharmacy",
+    "VERSION": "1.0.0",
 }
