@@ -5,6 +5,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status, filters
 from django_filters.rest_framework import DjangoFilterBackend
+
+from .filters import MedicationFilter, RefillRequestFilter
 from .serializers import (
     CategorySerializer,
     MedicationSerializer,
@@ -38,7 +40,7 @@ class MedicationViewSet(ModelViewSet):
         filters.SearchFilter,
         filters.OrderingFilter,
     ]
-    filterset_fields = ["category", "available", "form"]
+    filterset_class = MedicationFilter
     search_fields = ["name"]
     ordering_fields = ["price", "quantity"]
 
@@ -51,8 +53,8 @@ class RefillRequestViewSet(ModelViewSet):
         filters.SearchFilter,
         filters.OrderingFilter,
     ]
-    filterset_fields = ["medication", "status"]
-    search_fields = []
+    filterset_class = RefillRequestFilter
+    search_fields = ["medication__name"]
     ordering_fields = ["approved_at", "quantity"]
 
     def get_queryset(self):
