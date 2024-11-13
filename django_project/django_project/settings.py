@@ -54,8 +54,10 @@ INSTALLED_APPS = [
     "dj_rest_auth.registration",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    "django_filters",
     # local
     "accounts",
+    "medications",
 ]
 
 MIDDLEWARE = [
@@ -144,6 +146,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -154,9 +158,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Rest Framework settings
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.AllowAny",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",  # for easy login and logout in Browsable API
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 }
