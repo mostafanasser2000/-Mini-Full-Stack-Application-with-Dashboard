@@ -135,8 +135,5 @@ class RefillRequest(models.Model):
         self.status = "rejected"
         self.save()
 
-    def get_name(self):
-        return f"{self.first_name}"
-
     def __str__(self):
-        return f"{self.medication} "
+        return f"{self.user} Request ({self.medication}: units) "

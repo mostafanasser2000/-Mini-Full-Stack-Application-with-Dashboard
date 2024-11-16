@@ -27,7 +27,7 @@ class RefillRequestPermission(BasePermission):
             return True
         if request.method in ["PUT", "PATCH"]:
             return request.user.is_authenticated and request.user == obj.user
-        if request.method == "DELETE":
+        if request.method == "DELETE" and obj.status != "pending":
             return False
 
         return obj.user == request.user
