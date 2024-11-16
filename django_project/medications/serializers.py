@@ -54,12 +54,12 @@ class MedicationSerializer(serializers.HyperlinkedModelSerializer):
         return value
 
     def validate_quantity(self, value):
-        if value <= 0:
+        if value and value <= 0:
             raise serializers.ValidationError(_("Quantity must be greater than 1"))
         return value
 
     def validate_expiry_date(self, value):
-        if value < timezone.now().date():
+        if value and value < timezone.now().date():
             raise serializers.ValidationError(_("Expiry date must be in the future"))
         return value
 

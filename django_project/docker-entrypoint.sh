@@ -8,7 +8,6 @@ done
 
 echo "PostgresSQL started"
 
-python3 manage.py flush --no-input
-python3 manage.py migrate
-
+python manage.py migrate
+python3 manage.py generate_data
 exec "$@"

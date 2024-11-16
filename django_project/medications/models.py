@@ -29,6 +29,7 @@ class Medication(models.Model):
     MEDICATION_FORMS_CHOICES = [
         ("tablet", "Tablet"),
         ("capsules", "Capsules"),
+        ("liquid", "Liquid"),
         ("topical", "Topical"),
         ("drops", "Drops"),
         ("suppositories", "Suppositories"),
@@ -36,22 +37,26 @@ class Medication(models.Model):
         ("injections", "Injections"),
         ("others", "Others"),
     ]
-    # sku = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=300, unique=True, blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="medications"
     )
-    image = models.ImageField(upload_to="medications/", blank=True, null=True)
+    image = models.ImageField(
+        upload_to="medications/",
+        blank=True,
+        null=True,
+        default="static/imgs/default.png",
+    )
     price = models.DecimalField(
         max_digits=6, decimal_places=2, validators=[MinValueValidator(1)]
     )
     description = models.CharField(max_length=500, blank=True, null=True)
     form = models.CharField(choices=MEDICATION_FORMS_CHOICES, max_length=100)
     manufacturer = models.CharField(max_length=255, null=True, blank=True)
-    expiry_date = models.DateField()
+    expiry_date = models.DateField(null=True, blank=True)
     available = models.BooleanField(default=True)
-    quantity = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -91,7 +96,6 @@ class Medication(models.Model):
 
 
 class RefillRequest(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     STATUS_CHOICES = [
         ("pending", "Pending"),
         ("approved", "Approved"),
