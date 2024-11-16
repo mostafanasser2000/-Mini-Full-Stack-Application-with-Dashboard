@@ -6,9 +6,12 @@ WORKDIR /usr/src/app
 # Install dependenices
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci --legacy-peer-deps
+
+COPY . .
+
+RUN npm run build
 
 # Copy Project files
-COPY . .
 EXPOSE 3000
 CMD [ "npm", "start" ]
