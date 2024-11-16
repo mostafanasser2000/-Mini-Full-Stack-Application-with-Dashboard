@@ -129,14 +129,6 @@ Control.ca-bundle
 Control.system-ca-bundle 
 GitHub.sublime-settings 
 
-# Visual Studio Code # 
-.vscode/* 
-!.vscode/settings.json 
-!.vscode/tasks.json 
-!.vscode/launch.json 
-!.vscode/extensions.json 
-.history
-
 .DS_STORE
 node_modules
 scripts/flow/*/.flowconfig
