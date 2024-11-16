@@ -1,6 +1,6 @@
 # Mini Full-Stack Pharmacy Application with Dashboard
 
-A mini full-stack pharmacy application built using **Django REST framework** for the backend and **React** for the frontend. This application allows pharmacy staff and doctors to manage medications, refill requests, and request approvals/rejections, all through a dashboard interface.
+A mini full-stack pharmacy application built using **Django REST framework** for the backend and **React** for the front end. This application allows pharmacy staff and doctors to manage medications, refill requests, and request approvals/rejections, all through a dashboard interface.
 
 ## Tech Stack
 
@@ -10,8 +10,8 @@ A mini full-stack pharmacy application built using **Django REST framework** for
 
 ## Demo
 
-[Insert demo link or gif here]
-
+## Video Preview
+[![Task Preview]]([https://youtu.be/ZL2KEv2FGI8))
 ## Features
 
 - **JWT Authentication** for secure login and access control
@@ -26,7 +26,7 @@ Follow these steps to set up the application locally using Docker:
 
 ### Prerequisites
 
-Ensure that you have **Docker** and **Docker Compose** installed on your device. If not, you can download and install them from [Docker's official website](https://www.docker.com/get-started).
+Ensure you have **Docker** and **Docker Compose** installed on your device. If not, you can download and install them from [Docker's official website](https://www.docker.com/get-started).
 
 ### Steps
 
@@ -53,7 +53,7 @@ DB_USER=postgres
 DB_PASSWORD=postgres
 ```
 
-- Create `.env` file at project directory and add the fields begin with `DB` from the above to it.
+- Create `.env` file in the the project directory and add the fields beginning with `DB` from the above.
 
 - Build the Docker images:
 
@@ -73,11 +73,11 @@ docker compose up
 
   - The `Frontend` running at `http://localhost:3000/` or `http://0.0.0.0:3000/`
 
-- To interact with backend from the React app Navigate to `http://localhost:3000/` or `http://0.0.0.0:3000/` on your browser
+- To interact with the backend from the React app Navigate to `http://localhost:3000/` or `http://0.0.0.0:3000/` on your browser
 
 - **Access the application**
   - Open your browser and go to `http://localhost:3000/` (React app frontend).
-  - he backend API will be accessible at `http://localhost:8000/`
+  - the backend API will be accessible at `http://localhost:8000/`
 
 ## Default Admin User
 
@@ -86,7 +86,7 @@ When the Docker containers start, a default admin user is created to facilitate 
 - `email`: `admin@gmail.com`
 - `password`: `admin`
 
-You will need to sign up as a doctor to interact with refill requests.
+You must sign up as a doctor to interact with refill requests.
 
 ## API Reference
 
