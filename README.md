@@ -11,7 +11,7 @@ A mini full-stack pharmacy application built using **Django REST framework** for
 ## Demo
 
 ## Video Preview
-[![Task Preview]]([https://youtu.be/ZL2KEv2FGI8))
+[![Job-Board-Portal Preivew](https://i9.ytimg.com/vi_webp/ZL2KEv2FGI8/mq1.webp?sqp=CNTL47kG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGH8gEyg3MA8=&rs=AOn4CLBR-hyied11p4QSMoKxzLMZYFDxKQ)](https://youtu.be/ZL2KEv2FGI8)
 ## Features
 
 - **JWT Authentication** for secure login and access control
