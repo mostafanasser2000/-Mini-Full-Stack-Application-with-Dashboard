@@ -41,8 +41,19 @@ class MedicationViewSet(ModelViewSet):
         filters.OrderingFilter,
     ]
     filterset_class = MedicationFilter
-    search_fields = ["name"]
+    search_fields = [
+        "name",
+    ]
     ordering_fields = ["price", "quantity"]
+
+    def perform_update(self, serializer):
+        image = self.request.FILES.get("image")
+        if image:
+            serializer.validated_data["image"] = image
+        else:
+            if not hasattr(serializer.instance, "image"):
+                serializer.validated_data.pop("image", None)
+        super().perform_update(serializer)
 
 
 class RefillRequestViewSet(ModelViewSet):
@@ -56,6 +67,16 @@ class RefillRequestViewSet(ModelViewSet):
     filterset_class = RefillRequestFilter
     search_fields = ["medication__name"]
     ordering_fields = ["approved_at", "quantity"]
+
+    def destroy(self, request, *args, **kwargs):
+        refill_request = self.get_object()
+        if refill_request.status != "pending":
+            return Response(
+                {"detail": "Can not delete requests that is approved or rejected"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        return super().destroy(request, *args, **kwargs)
 
     def get_queryset(self):
         qs = RefillRequest.objects.select_related("user", "medication")
