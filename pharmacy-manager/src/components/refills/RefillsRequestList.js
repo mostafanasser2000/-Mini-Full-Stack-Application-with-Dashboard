@@ -114,7 +114,6 @@ const RefillRequestList = () => {
   }
 
   const doughnutData = [
-    { name: "Total", value: stats.total_requests },
     { name: "Pending", value: stats.total_pending },
     { name: "Approved", value: stats.total_approved },
     { name: "Rejected", value: stats.total_rejected },
@@ -194,7 +193,7 @@ const RefillRequestList = () => {
                     {doughnutData.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
+                        fill={COLORS[index+1 % COLORS.length]}
                       />
                     ))}
                   </Pie>
@@ -207,7 +206,7 @@ const RefillRequestList = () => {
                 <div key={entry.name} className="flex items-center gap-2">
                   <div
                     className="w-4 h-4 rounded"
-                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                    style={{ backgroundColor: COLORS[index+1 % COLORS.length] }}
                   ></div>
                   <span className="font-medium">{entry.name}</span>
                 </div>
