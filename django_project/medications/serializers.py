@@ -103,7 +103,7 @@ class RefillRequestSerializer(serializers.HyperlinkedModelSerializer):
         }
 
     def validate_quantity(self, value):
-        if value <= 0:
+        if value < 0:
             raise serializers.ValidationError(_("Quantity must be greater than 0"))
         return value
 
@@ -130,13 +130,14 @@ class RefillRequestSerializer(serializers.HyperlinkedModelSerializer):
             raise serializers.ValidationError(
                 _("Can not update Refill Request that already approved or rejected")
             )
-        if "medication" in validated_data:
-            medication = validated_data["medication"]
-            if not medication.available:
+        # there is no need to implement this as user can not update medication
+        # if "medication" in validated_data:
+        #     medication = validated_data["medication"]
+        #     if not medication.available:
 
-                raise serializers.ValidationError(
-                    _(
-                        "Selected medication is out of stock right now, please come back soon when it's available "
-                    )
-                )
+        #         raise serializers.ValidationError(
+        #             _(
+        #                 "Selected medication is out of stock right now, please come back soon when it's available "
+        #             )
+        #         )
         return super().update(instance, validated_data)
