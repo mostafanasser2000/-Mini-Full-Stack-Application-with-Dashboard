@@ -83,7 +83,14 @@ const RefillRequestDetail = () => {
         return null;
     }
   };
+  const constructAddress = (country, city, street) => {
+    let address = "";
+    if (street) address += street;
+    if (city) address = address ? address + ", " + city : city;
+    if (country) address = address ? address + ", " + country : country;
 
+    return address || "Unknown";
+  };
   if (loading) {
     return <Loading />;
   }
@@ -124,8 +131,12 @@ const RefillRequestDetail = () => {
                   <strong>Email:</strong> {request.email}
                 </p>
                 <p className="card-text mb-3">
-                  <strong>Address:</strong> {request.street}, {request.city},{" "}
-                  {request.country}
+                  <strong>Address:</strong>{" "}
+                  {constructAddress(
+                    request.country,
+                    request.city,
+                    request.street
+                  )}
                 </p>
                 <p
                   className={`card-text mb-3 ${getStatusColor(request.status)}`}
