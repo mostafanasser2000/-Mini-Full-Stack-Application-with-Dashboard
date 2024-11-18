@@ -5,15 +5,17 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status, filters
 from django_filters.rest_framework import DjangoFilterBackend
-
+from django.http.response import JsonResponse
 from .filters import MedicationFilter, RefillRequestFilter
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer
 from .serializers import (
     CategorySerializer,
     MedicationSerializer,
     RefillRequestSerializer,
 )
 from .permissions import IsAdminOrReadOnly, RefillRequestPermission
-from .models import Category, Medication, RefillRequest
+from .models import Category, Medication, RefillRequest, MEDICATION_FORMS_CHOICES
 
 
 class CategoryViewSet(ModelViewSet):
@@ -119,3 +121,13 @@ class RefillRequestViewSet(ModelViewSet):
             {"detail": f"Refill request ({refill_request.id}) has been rejected."},
             status=status.HTTP_200_OK,
         )
+
+
+@api_view(
+    [
+        "GET",
+    ]
+)
+@renderer_classes((JSONRenderer,))
+def medication_forms(request):
+    return Response(data=MEDICATION_FORMS_CHOICES)

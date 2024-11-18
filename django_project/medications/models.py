@@ -3,7 +3,19 @@ from django.core.validators import MinValueValidator
 from django.utils.text import slugify
 from django.utils import timezone
 from django.contrib.auth import get_user_model
-import uuid
+
+
+MEDICATION_FORMS_CHOICES = [
+    ("tablet", "Tablet"),
+    ("capsules", "Capsules"),
+    ("liquid", "Liquid"),
+    ("topical", "Topical"),
+    ("drops", "Drops"),
+    ("suppositories", "Suppositories"),
+    ("inhalers", "Inhalers"),
+    ("injections", "Injections"),
+    ("others", "Others"),
+]
 
 
 class Category(models.Model):
@@ -26,17 +38,7 @@ class Category(models.Model):
 
 
 class Medication(models.Model):
-    MEDICATION_FORMS_CHOICES = [
-        ("tablet", "Tablet"),
-        ("capsules", "Capsules"),
-        ("liquid", "Liquid"),
-        ("topical", "Topical"),
-        ("drops", "Drops"),
-        ("suppositories", "Suppositories"),
-        ("inhalers", "Inhalers"),
-        ("injections", "Injections"),
-        ("others", "Others"),
-    ]
+
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=300, unique=True, blank=True)
     category = models.ForeignKey(
