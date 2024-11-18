@@ -46,3 +46,12 @@ export const deleteCategory = async (slug) => {
     throw error;
   }
 };
+
+export const getMedicationForms = async () => {
+  try {
+    const response = await axiosInstance.get("medication-forms/");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

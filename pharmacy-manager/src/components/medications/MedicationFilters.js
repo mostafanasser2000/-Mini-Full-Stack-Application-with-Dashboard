@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { getCategories } from "../../api/categories";
+import { getCategories, getMedicationForms } from "../../api/categories";
 
 const MedicationFilters = ({ onFiltersChange }) => {
   const [categories, setCategories] = useState([]);
+  const [forms, setForms] = useState([]);
   const [categorySlug, setCategorySlug] = useState("");
   const [available, setAvailable] = useState(null);
   const [form, setForm] = useState("");
@@ -17,8 +18,17 @@ const MedicationFilters = ({ onFiltersChange }) => {
         setError(err.message);
       }
     };
-
+    const fetchForms = async () => {
+      try {
+        const formsData = await getMedicationForms();
+        console.log(formsData);
+        setForms(formsData);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
     fetchCategories();
+    fetchForms();
   }, []);
   const handleApplyFilters = () => {
     const filters = {
@@ -86,15 +96,11 @@ const MedicationFilters = ({ onFiltersChange }) => {
             className="form-select"
           >
             <option value="">All</option>
-            <option value="tablet">Tablet</option>
-            <option value="capsules">Capsules</option>
-            <option value="liquid">Liquid</option>
-            <option value="topical">Topical</option>
-            <option value="drops">Drops</option>
-            <option value="suppositories">Suppositories</option>
-            <option value="inhalers">Inhalers</option>
-            <option value="injections">Injections</option>
-            <option value="others">Others</option>
+            {forms.map((form) => (
+              <option key={form[0]} value={form[0]}>
+                {form[1]}
+              </option>
+            ))}
           </select>
         </div>
 

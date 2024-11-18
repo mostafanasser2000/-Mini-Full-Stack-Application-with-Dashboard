@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createMedication, updateMedication } from "../../api/medications";
-import { getCategories } from "../../api/categories";
+import { getCategories, getMedicationForms } from "../../api/categories";
 import ErrorAlert from "../common/ErrorAlert";
 import SuccessAlert from "../common/SuccessAlert";
 import useAuth from "../../hooks/useAuth";
@@ -27,6 +27,7 @@ const MedicationForm = ({ medication = null }) => {
     medication?.expiry_date ? medication.expiry_date.split("T")[0] : ""
   );
   const [categories, setCategories] = useState([]);
+  const [forms, setForms] = useState([]);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
@@ -39,8 +40,16 @@ const MedicationForm = ({ medication = null }) => {
         setError(err.message);
       }
     };
-
+    const fetchMedicationForms = async () => {
+      try {
+        const formsData = await getMedicationForms();
+        setForms(formsData);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
     fetchCategories();
+    fetchMedicationForms();
   }, []);
 
   const handleImageChange = (e) => {
@@ -154,14 +163,11 @@ const MedicationForm = ({ medication = null }) => {
             className="form-control w-full px-3 py-2 border rounded-md"
             required
           >
-            <option value="tablet">Tablet</option>
-            <option value="capsules">Capsules</option>
-            <option value="topical">Topical</option>
-            <option value="drops">Drops</option>
-            <option value="suppositories">Suppositories</option>
-            <option value="inhalers">Inhalers</option>
-            <option value="injections">Injections</option>
-            <option value="other">Other</option>
+            {forms.map((form) => (
+              <option key={form[0]} value={form[0]}>
+                {form[1]}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -179,7 +185,6 @@ const MedicationForm = ({ medication = null }) => {
             className="form-control w-full px-3 py-2 border rounded-md"
             required
           >
-            <option value="">Select a category</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
