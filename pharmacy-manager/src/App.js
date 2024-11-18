@@ -41,8 +41,6 @@ function App() {
             }
           />
           <Route path="/medications/" element={<MedicationList />} />
-          {/* <Route path="/medications/search/?q" element={<MedicationList />} /> */}
-
           <Route
             path="/medications/add/"
             element={

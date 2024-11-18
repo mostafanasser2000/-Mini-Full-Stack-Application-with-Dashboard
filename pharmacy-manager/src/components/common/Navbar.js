@@ -1,11 +1,12 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Disclosure, Transition } from "@headlessui/react";
 import useAuth from "../../hooks/useAuth";
 
 const ResponsiveNavbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  let [searchParams, setSearchParams] = useSearchParams();
 
   const handleLogout = async () => {
     await logout();
@@ -14,9 +15,9 @@ const ResponsiveNavbar = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const query = e.target.elements.q.value;
+    const query = e.target.elements.q.value.trim();
     if (query) {
-      navigate(`/medications/search?q=${query}`);
+      navigate(`/medications?q=${encodeURIComponent(query)}`);
     }
   };
 
@@ -33,7 +34,7 @@ const ResponsiveNavbar = () => {
                 <Link to="/" className="navbar-brand custom-logo me-3">
                   Pyramids Pharmacy
                 </Link>
-                {/* <form className="d-flex search-form" onSubmit={handleSearch}>
+                <form className="d-flex search-form" onSubmit={handleSearch}>
                   <input
                     className="form-control me-2"
                     type="search"
@@ -44,7 +45,7 @@ const ResponsiveNavbar = () => {
                   <button className="btn btn-outline-primary" type="submit">
                     <i className="fa fa-search"></i>
                   </button>
-                </form> */}
+                </form>
               </div>
 
               <div className="d-none d-lg-flex align-items-center mx-auto">
@@ -118,7 +119,7 @@ const ResponsiveNavbar = () => {
                       Admin
                     </Link>
                   )}
-                  {/* <form
+                  <form
                     className="d-flex search-form my-2"
                     onSubmit={handleSearch}
                   >
@@ -132,7 +133,7 @@ const ResponsiveNavbar = () => {
                     <button className="btn btn-outline-primary" type="submit">
                       <i className="fa fa-search"></i>
                     </button>
-                  </form> */}
+                  </form>
                   {user ? (
                     <>
                       <span className="nav-link">{user.email}</span>

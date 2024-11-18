@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { CheckCircle, XCircle } from "lucide-react";
 
 import { getMedications } from "../../api/medications";
@@ -16,12 +16,17 @@ const MedicationList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  let [searchParams] = useSearchParams();
+  const query = searchParams.get("q") || "";
 
   useEffect(() => {
     const fetchMedications = async () => {
       try {
         setLoading(true);
-        const medicationsData = await getMedications(filters);
+        const medicationsData = await getMedications({
+          ...filters,
+          search: query,
+        });
         setMedications(medicationsData);
       } catch (err) {
         setError(err.message);
@@ -31,7 +36,7 @@ const MedicationList = () => {
     };
 
     fetchMedications();
-  }, [filters]);
+  }, [filters, query]);
 
   const handleFiltersChange = (newFilters) => {
     setFilters(newFilters);
@@ -44,7 +49,6 @@ const MedicationList = () => {
   if (error) {
     return <ErrorAlert message={error} />;
   }
-
   return (
     <div className="container">
       <h1 className="text-center mb-4">Medications</h1>
@@ -61,7 +65,11 @@ const MedicationList = () => {
           <div key={medication.id} className="col">
             <div
               className="card h-100 shadow-sm"
-              style={{ maxWidth: "340px", margin: "0 auto", cursor: "pointer" }}
+              style={{
+                maxWidth: "340px",
+                margin: "0 auto",
+                cursor: "pointer",
+              }}
               onClick={() => navigate(`/medications/${medication.slug}`)}
             >
               <div style={{ height: "220px", overflow: "hidden" }}>
