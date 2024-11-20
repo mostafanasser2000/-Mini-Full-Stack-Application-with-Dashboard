@@ -41,7 +41,6 @@ export default function RegisterForm() {
           }}
           validationSchema={registerSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            console.log(values);
             try {
               await register(values);
               navigate("/dashboard");

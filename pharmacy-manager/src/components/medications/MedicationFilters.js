@@ -21,7 +21,6 @@ const MedicationFilters = ({ onFiltersChange }) => {
     const fetchForms = async () => {
       try {
         const formsData = await getMedicationForms();
-        console.log(formsData);
         setForms(formsData);
       } catch (err) {
         setError(err.message);

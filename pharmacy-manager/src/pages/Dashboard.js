@@ -23,7 +23,6 @@ const Dashboard = () => {
           setRefillRequests(refillData);
         } catch (err) {
           setError("Error fetching data");
-          console.error("Dashboard data fetch error:", err);
         } finally {
           setIsDataLoading(false);
         }

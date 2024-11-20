@@ -50,7 +50,10 @@ const MedicationList = () => {
     return <ErrorAlert message={error} />;
   }
   return (
-    <div className="container">
+    <div
+      className="container-fluid bg-trasparent my-4 p-3"
+      style={{ position: "relative" }}
+    >
       <h1 className="text-center mb-4">Medications</h1>
       <MedicationFilters onFiltersChange={handleFiltersChange} />
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -60,34 +63,23 @@ const MedicationList = () => {
           </Link>
         )}
       </div>
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      <div className="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
         {medications.map((medication) => (
           <div key={medication.id} className="col">
             <div
               className="card h-100 shadow-sm"
               style={{
-                maxWidth: "340px",
-                margin: "0 auto",
                 cursor: "pointer",
               }}
               onClick={() => navigate(`/medications/${medication.slug}`)}
             >
-              <div style={{ height: "220px", overflow: "hidden" }}>
-                <img
-                  src={medication.image}
-                  alt={medication.name}
-                  className="card-img-top"
-                  style={{
-                    height: "100%",
-                    width: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
-              <div className="card-body p-4">
-                <h5 className="card-title text-truncate mb-3">
-                  {medication.name}
-                </h5>
+              <img
+                src={medication.image}
+                alt={medication.name}
+                className="card-img-top"
+              />
+              <div className="card-body">
+                <h5 className="card-title">{medication.name}</h5>
                 <p className="card-text mb-3">
                   <strong>Category:</strong> {medication.category.name}
                 </p>
@@ -113,7 +105,7 @@ const MedicationList = () => {
               {isAuthenticated && !isAdmin && medication.available && (
                 <div className="card-footer bg-light p-3">
                   <button
-                    className="btn btn-outline-primary w-100"
+                    className="btn btn-warning w-100"
                     onClick={(e) => {
                       e.stopPropagation();
                       navigate("/refill-requests/create/", {

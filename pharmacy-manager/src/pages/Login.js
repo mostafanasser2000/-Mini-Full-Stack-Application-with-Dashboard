@@ -12,7 +12,7 @@ const Login = () => {
       await login(formData);
       navigate("/dashboard");
     } catch (error) {
-      console.error("Login error:", error);
+      throw error;
     }
   };
 
@@ -22,7 +22,7 @@ const Login = () => {
         <div className="card auth-card">
           <div className="card-body">
             <LoginForm onSubmit={handleLogin} />
-            <div class="auth-links mt-4">
+            <div className="auth-links mt-4">
               <p className="text-center mb-2">
                 Don't have an account?{" "}
                 <Link

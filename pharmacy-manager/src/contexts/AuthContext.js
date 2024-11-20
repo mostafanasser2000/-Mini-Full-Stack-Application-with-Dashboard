@@ -5,10 +5,7 @@ import {
   register as registerApi,
   logout as logoutApi,
 } from "../api/auth";
-import {
-  getAccessToken,
-  clearTokens,
-} from "../utils/tokenUtils";
+import { getAccessToken, clearTokens } from "../utils/tokenUtils";
 
 export const AuthContext = createContext();
 
@@ -36,7 +33,6 @@ export const AuthProvider = ({ children }) => {
     fetchCurrentUser();
   }, []);
 
-  
   const login = async (email, password) => {
     try {
       const userData = await loginApi(email, password);
@@ -46,7 +42,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  
   const register = async (formData) => {
     try {
       const userData = await registerApi(
@@ -66,12 +61,12 @@ export const AuthProvider = ({ children }) => {
       clearTokens();
       setUser(null);
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   };
 
   const isAuthenticated = !!user;
-  const isAdmin = user?.is_staff || false; 
+  const isAdmin = user?.is_staff || false;
 
   return (
     <AuthContext.Provider
@@ -80,9 +75,9 @@ export const AuthProvider = ({ children }) => {
         isLoading,
         isAuthenticated,
         isAdmin,
-        login, 
-        register, 
-        logout, 
+        login,
+        register,
+        logout,
       }}
     >
       {children}

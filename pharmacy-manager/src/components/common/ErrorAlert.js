@@ -8,15 +8,12 @@ const iconTypes = {
 };
 
 const ErrorAlert = ({
-  title = "Error",
-  message,
+  errors = {},
   variant = "error",
   className = "",
   onClose,
   autoClose = 0,
 }) => {
-  const IconComponent = iconTypes[variant];
-
   React.useEffect(() => {
     if (autoClose > 0 && onClose) {
       const timer = setTimeout(() => {
@@ -38,31 +35,44 @@ const ErrorAlert = ({
     blocked: "text-gray-500",
   };
 
+  // Flatten the errors into an array for easier rendering
+  const formattedErrors = Object.entries(errors).flatMap(([field, messages]) =>
+    Array.isArray(messages)
+      ? messages.map((msg) => ({ field, message: msg }))
+      : [{ field, message: messages }]
+  );
+
   return (
-    <div
-      className={`
-        flex items-start gap-4 p-4 rounded-lg border
-        ${variantStyles[variant]}
-        ${className}
-      `}
-      role="alert"
-    >
-      <IconComponent
-        className={`h-5 w-5 ${iconStyles[variant]} flex-shrink-0 mt-0.5`}
-      />
-      <div className="flex-1 min-w-0">
-        <h3 className="text-sm font-medium">{title}</h3>
-        <p className="mt-1 text-sm">{message}</p>
-      </div>
-      {onClose && (
-        <button
-          onClick={onClose}
-          className="flex-shrink-0 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 rounded"
-          aria-label="Close alert"
-        >
-          <X className="h-5 w-5" />
-        </button>
-      )}
+    <div className={`space-y-4 ${className}`}>
+      {formattedErrors.map((error, index) => {
+        return (
+          <div
+            key={index}
+            className={`flex items-center justify-between p-4 border rounded ${variantStyles[variant]}`}
+          >
+            <div className="flex items-center space-x-2">
+              <div>
+                {error.field !== "non_field_errors" && (
+                  <h3 className="font-semibold capitalize">
+                    {error.field.replace("_", " ")}
+                  </h3>
+                )}
+                <p className="text-sm">{error.message}</p>
+              </div>
+            </div>
+
+            {onClose && (
+              <button
+                className="ml-4 text-gray-400 hover:text-gray-600"
+                onClick={() => onClose(index)}
+                aria-label="Close"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };

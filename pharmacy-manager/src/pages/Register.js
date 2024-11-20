@@ -12,7 +12,7 @@ const Register = () => {
       await register(formData);
       navigate("/login");
     } catch (error) {
-      console.error("Registration error:", error);
+      throw error;
     }
   };
 

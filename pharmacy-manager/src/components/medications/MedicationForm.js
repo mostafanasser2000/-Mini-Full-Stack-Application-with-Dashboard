@@ -37,7 +37,7 @@ const MedicationForm = ({ medication = null }) => {
         const categoriesData = await getCategories();
         setCategories(categoriesData);
       } catch (err) {
-        setError(err.message);
+        setError(err.response.data);
       }
     };
     const fetchMedicationForms = async () => {
@@ -45,7 +45,7 @@ const MedicationForm = ({ medication = null }) => {
         const formsData = await getMedicationForms();
         setForms(formsData);
       } catch (err) {
-        setError(err.message);
+        setError(err.response.data);
       }
     };
     fetchCategories();
@@ -57,6 +57,10 @@ const MedicationForm = ({ medication = null }) => {
       setImageFile(e.target.files[0]);
       setExistingImage(null); // Clear existing image when new file is selected
     }
+  };
+
+  const handleCloseError = () => {
+    setError(null);
   };
 
   const handleSubmit = async (e) => {
@@ -90,8 +94,7 @@ const MedicationForm = ({ medication = null }) => {
       setError(null);
       navigate("/medications");
     } catch (err) {
-      console.error(err);
-      setError(err.message);
+      setError(err.response.data);
       setSuccess(false);
     }
   };
@@ -111,7 +114,9 @@ const MedicationForm = ({ medication = null }) => {
         {medication ? "Update Medication" : "Create Medication"}
       </h2>
 
-      {error && <ErrorAlert message={error} />}
+      {error && (
+        <ErrorAlert errors={error} onClose={handleCloseError} variant="error" />
+      )}
       {success && (
         <SuccessAlert
           message={

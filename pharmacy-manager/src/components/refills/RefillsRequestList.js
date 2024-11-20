@@ -141,8 +141,6 @@ const RefillRequestList = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="p-6">
-        <h1 className="text-3xl font-bold mb-6">Refill Requests Dashboard</h1>
-
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-blue-500 text-white rounded-lg p-6 shadow-lg">
@@ -193,7 +191,7 @@ const RefillRequestList = () => {
                     {doughnutData.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
-                        fill={COLORS[index+1 % COLORS.length]}
+                        fill={COLORS[index + (1 % COLORS.length)]}
                       />
                     ))}
                   </Pie>
@@ -206,7 +204,9 @@ const RefillRequestList = () => {
                 <div key={entry.name} className="flex items-center gap-2">
                   <div
                     className="w-4 h-4 rounded"
-                    style={{ backgroundColor: COLORS[index+1 % COLORS.length] }}
+                    style={{
+                      backgroundColor: COLORS[index + (1 % COLORS.length)],
+                    }}
                   ></div>
                   <span className="font-medium">{entry.name}</span>
                 </div>

@@ -15,14 +15,12 @@ export const login = async (email, password) => {
     setTokens(response.data.access, response.data.refresh);
     return response.data.user;
   } catch (error) {
-    console.error("Login failed:", error.response || error);
     throw error;
   }
 };
 
 export const register = async (email, password1, password2) => {
   try {
-    console.log(email, password1, password2);
     const response = await axiosInstance({
       url: "accounts/registration/",
       data: { email, password1, password2 },
@@ -31,7 +29,6 @@ export const register = async (email, password1, password2) => {
     setTokens(response.data.access, response.data.refresh);
     return response.data.user;
   } catch (error) {
-    console.error("Registration failed:", error.response || error);
     throw error;
   }
 };
@@ -42,7 +39,6 @@ export const logout = async () => {
       refresh: getRefreshToken(),
     });
   } catch (error) {
-    console.error("Logout failed:", error.response || error);
     throw error;
   }
 };
@@ -59,7 +55,6 @@ export const refreshToken = async () => {
     });
     setTokens(response.data.access, response.data.refresh);
   } catch (error) {
-    console.error("Token refresh failed:", error.response || error);
     throw error;
   }
 };
@@ -74,7 +69,6 @@ export const getCurrentUser = async () => {
     const response = await axiosInstance.get("accounts/user/");
     return response.data;
   } catch (error) {
-    console.error("Fetching current user failed:", error.response || error);
     throw error;
   }
 };

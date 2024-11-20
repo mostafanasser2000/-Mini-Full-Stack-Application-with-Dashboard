@@ -17,6 +17,9 @@ export default function LoginForm() {
   const { login } = useAuth();
   const [error, setError] = useState(null);
 
+  const handleCloseError = () => {
+    setError(null);
+  };
   return (
     <div className="d-flex flex-column justify-content-center align-items-center px-3 py-4">
       <div className="mx-auto" style={{ maxWidth: "400px" }}>
@@ -24,7 +27,13 @@ export default function LoginForm() {
       </div>
 
       <div className="mt-5 mx-auto w-100" style={{ maxWidth: "400px" }}>
-        {error && <ErrorAlert message={error} />}
+        {error && (
+          <ErrorAlert
+            errors={error}
+            onClose={handleCloseError}
+            variant="error"
+          />
+        )}
 
         <Formik
           initialValues={{
@@ -37,7 +46,7 @@ export default function LoginForm() {
               await login(values.email, values.password);
               navigate("/dashboard");
             } catch (err) {
-              setError(err.detail || "Invalid email or password");
+              setError(err.response.data || "Invalid email or password");
             } finally {
               setSubmitting(false);
             }
